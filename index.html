@@ -1,1 +1,1128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroViva - Plataforma AgroSustentável Completa</title>
+    
+    <style>
+        /* ==========================================================================
+           1. VARIÁVEIS DE AMBIENTE (PALETA AGRO/SUSTENTABILIDADE DE ALTO CONTRASTE)
+           ========================================================================== */
+        :root {
+            /* Cores Principais */
+            --cor-principal-agro: #1b4332;      /* Verde escuro floresta - Identidade Forte */
+            --cor-secundaria-sustentavel: #2d6a4f; /* Verde médio para botões e realces */
+            --cor-contraste-ouro: #d4a373;      /* Tom de terra/ouro para destaques e conquistas */
+            
+            /* Tons de Apoio */
+            --cor-fundo-claro: #f4f7f5;         /* Cinza esverdeado claro para conforto visual */
+            --cor-fundo-card: #ffffff;          /* Blanco puro para cartões de conteúdo */
+            --cor-texto-escuro: #111111;        /* Alto contraste para leitura de textos */
+            --cor-texto-claro: #ffffff;         /* Texto claro sobre fundos escuros */
+            --cor-erro-alerta: #bc4749;         /* Vermelho opaco acessível para validações */
+            --cor-borda: #e5e7eb;
+            
+            /* Tipografia e Efeitos */
+            --fonte-principal: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --borda-raio: 8px;
+            --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
 
+        /* ==========================================================================
+           2. RESET GLOBAL E CONFIGURAÇÕES DE PÁGINA
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--fonte-principal);
+            background-color: var(--cor-fundo-claro);
+            color: var(--cor-texto-escuro);
+            line-height: 1.6;
+            font-size: 11pt;
+        }
+
+        /* Classes Utilitárias Globais */
+        .esconder-elemento {
+            display: none !important;
+        }
+
+        .instrucao {
+            font-size: 10.5pt;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+
+        /* ==========================================================================
+           3. TELA DE BLOQUEIO INTERATIVA (SPLASH SCREEN)
+           ========================================================================== */
+        #tela-bloqueio {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--cor-principal-agro);
+            color: var(--cor-texto-claro);
+            z-index: 9999;
+            display: block;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .bloqueio-conteudo {
+            display: block;
+            max-width: 550px;
+            margin: 8% auto;
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 40px;
+            border-radius: var(--borda-raio);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .bloqueio-badge {
+            display: inline-block;
+            background-color: var(--cor-contraste-ouro);
+            color: var(--cor-texto-escuro);
+            padding: 6px 16px;
+            font-weight: bold;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            font-size: 10pt;
+            text-transform: uppercase;
+        }
+
+        #tela-bloqueio h1 {
+            font-size: 22pt;
+            margin-bottom: 15px;
+        }
+
+        #tela-bloqueio p {
+            font-size: 12pt;
+            color: #e0e0e0;
+            margin-bottom: 25px;
+        }
+
+        .bloqueio-status {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: var(--borda-raio);
+            margin-bottom: 30px;
+            border-left: 4px solid var(--cor-contraste-ouro);
+            text-align: left;
+        }
+
+        .bloqueio-status p {
+            font-size: 10pt;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        /* ==========================================================================
+           4. CABEÇALHO E MENU DE ABAS (NAVEGAÇÃO COM ABAS)
+           ========================================================================== */
+        header {
+            background-color: var(--cor-principal-agro);
+            color: var(--cor-texto-claro);
+            padding: 30px 20px 0 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--cor-contraste-ouro);
+        }
+
+        .header-container h1 {
+            font-size: 26pt;
+            margin-bottom: 5px;
+        }
+
+        .header-container p {
+            font-size: 12pt;
+            color: #cbd5e1;
+            margin-bottom: 25px;
+        }
+
+        nav {
+            display: block;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .aba-link {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--cor-texto-claro);
+            border: none;
+            border-radius: var(--borda-raio) var(--borda-raio) 0 0;
+            font-size: 10.5pt;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .aba-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .aba-link.ativa {
+            background-color: var(--cor-fundo-claro);
+            color: var(--cor-principal-agro);
+            border: 1px solid var(--cor-borda);
+            border-bottom: none;
+        }
+
+        /* Controlar a exibição das abas de conteúdo */
+        .aba-conteudo {
+            display: none !important;
+        }
+
+        .aba-conteudo.ativa {
+            display: block !important;
+        }
+
+        /* ==========================================================================
+           5. LAYOUT PRINCIPAL, SEÇÕES E FORMULÁRIOS
+           ========================================================================== */
+        main {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        section {
+            background-color: var(--cor-fundo-card);
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: var(--borda-raio);
+            box-shadow: var(--sombra-suave);
+            border-top: 4px solid var(--cor-secundaria-sustentavel);
+        }
+
+        section h2 {
+            font-size: 15pt;
+            color: var(--cor-principal-agro);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--cor-borda);
+        }
+
+        .sub-bloco {
+            display: block;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--cor-borda);
+        }
+
+        .sub-bloco h3 {
+            font-size: 12pt;
+            color: var(--cor-secundaria-sustentavel);
+            margin-bottom: 10px;
+        }
+
+        /* Formulários e Inputs */
+        .campo-grupo {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .campo-grupo label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 10.5pt;
+        }
+
+        .campo-grupo input[type="number"],
+        .campo-grupo input[type="text"],
+        .campo-grupo select {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #cccccc;
+            border-radius: var(--borda-raio);
+            font-size: 11pt;
+            font-family: var(--fonte-principal);
+        }
+
+        .campo-grupo input:focus,
+        .campo-grupo select:focus {
+            outline: none;
+            border-color: var(--cor-secundaria-sustentavel);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: var(--cor-secundaria-sustentavel);
+            color: var(--cor-texto-claro);
+            border: none;
+            border-radius: var(--borda-raio);
+            font-size: 12pt;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--cor-principal-agro);
+        }
+
+        /* ==========================================================================
+           6. PAINEL DE GAMIFICAÇÃO (MEDALHAS)
+           ========================================================================== */
+        #painel-conquistas {
+            border-top: 4px solid var(--cor-contraste-ouro);
+        }
+
+        .medalhas-container {
+            display: block;
+            text-align: center;
+        }
+
+        .medalha-card {
+            display: inline-block;
+            width: 30%;
+            margin: 1%;
+            padding: 15px 10px;
+            background-color: var(--cor-fundo-claro);
+            border-radius: var(--borda-raio);
+            border: 2px solid var(--cor-borda);
+            vertical-align: top;
+            transition: all 0.3s ease;
+        }
+
+        .medalha-card h3 {
+            font-size: 10pt;
+            margin: 8px 0 4px 0;
+            color: var(--cor-texto-escuro);
+        }
+
+        .medalha-card p {
+            font-size: 8.5pt;
+            color: #666666;
+            line-height: 1.3;
+        }
+
+        .medalha-icone {
+            display: block;
+            font-size: 24pt;
+            filter: grayscale(100%);
+            opacity: 0.4;
+            transition: all 0.3s ease;
+        }
+
+        .medalha-card.desbloqueada {
+            background-color: #fffdf5;
+            border-color: var(--cor-contraste-ouro);
+            box-shadow: 0 4px 10px rgba(212, 163, 115, 0.2);
+        }
+
+        .medalha-card.desbloqueada .medalha-icone {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* ==========================================================================
+           7. GRÁFICO DE TENDÊNCIA DE MERCADO (SEM FLEX/GRID)
+           ========================================================================== */
+        .grafico-container {
+            background-color: var(--cor-fundo-claro);
+            padding: 20px;
+            border-radius: var(--borda-raio);
+            margin-bottom: 20px;
+            border: 1px solid var(--cor-borda);
+        }
+
+        .grafico-barra-grupo {
+            display: block;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .grafico-label {
+            display: block;
+            width: 15%;
+            float: left;
+            font-weight: bold;
+            padding-top: 4px;
+        }
+
+        .grafico-barra-fundo {
+            display: block;
+            width: 65%;
+            float: left;
+            background-color: #e5e7eb;
+            height: 30px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-right: 2%;
+        }
+
+        .grafico-barra-preenchimento {
+            display: block;
+            height: 100%;
+            background-color: #9ca3af;
+            width: 0%;
+            transition: width 0.8s ease-out;
+        }
+
+        .grafico-barra-preenchimento.destaque-alta {
+            background-color: var(--cor-secundaria-sustentavel);
+        }
+
+        .grafico-preco {
+            display: block;
+            width: 18%;
+            float: left;
+            font-weight: bold;
+            text-align: right;
+            padding-top: 4px;
+            color: var(--cor-texto-escuro);
+        }
+
+        /* ==========================================================================
+           8. CHAT DA IA AGROSUSTENTÁVEL
+           ========================================================================== */
+        .chat-container {
+            border: 2px solid var(--cor-borda);
+            border-radius: var(--borda-raio);
+            background-color: #f9fafb;
+            overflow: hidden;
+        }
+
+        #chat-historico {
+            display: block;
+            height: 250px;
+            overflow-y: auto;
+            padding: 15px;
+            border-bottom: 1px solid var(--cor-borda);
+        }
+
+        .chat-msg {
+            display: block;
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: var(--borda-raio);
+            margin-bottom: 12px;
+            font-size: 10.5pt;
+        }
+
+        .chat-msg.bot {
+            background-color: #e2e8f0;
+            color: var(--cor-texto-escuro);
+            margin-right: auto;
+            border-left: 4px solid var(--cor-principal-agro);
+        }
+
+        .chat-msg.usuario {
+            background-color: var(--cor-secundaria-sustentavel);
+            color: var(--cor-texto-claro);
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .chat-input-grupo {
+            display: block;
+            padding: 10px;
+            background-color: #ffffff;
+            overflow: hidden;
+        }
+
+        #chat-mensagem-usuario {
+            width: 78%;
+            float: left;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: var(--borda-raio);
+        }
+
+        #btn-enviar-chat {
+            width: 20%;
+            float: right;
+            padding: 10px;
+            font-size: 10.5pt;
+        }
+
+        /* ==========================================================================
+           9. INTERFACES DINÂMICAS: ERROS, RESULTADOS E SALDO
+           ========================================================================== */
+        #painel-erro {
+            margin-bottom: 20px;
+        }
+
+        .caixa-erro {
+            background-color: #fdf2f2;
+            border: 2px solid var(--cor-erro-alerta);
+            color: var(--cor-erro-alerta);
+            padding: 15px;
+            border-radius: var(--borda-raio);
+            font-weight: bold;
+        }
+
+        .saldo-container {
+            background-color: #fff7ed;
+            border: 1px dashed var(--cor-contraste-ouro);
+            padding: 12px;
+            border-radius: var(--borda-raio);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 12pt;
+        }
+
+        .saldo-container strong {
+            color: #c2410c;
+        }
+
+        .painel-saida {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #fafafa;
+            border: 1px solid var(--cor-borda);
+            border-radius: var(--borda-raio);
+        }
+
+        .painel-saida h3 {
+            font-size: 12pt;
+            color: var(--cor-principal-agro);
+            margin-bottom: 12px;
+        }
+
+        .mensagem-aguardo {
+            color: #71717a;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .resultado-bloco {
+            background-color: #f0fdf4;
+            border-left: 5px solid var(--cor-secundaria-sustentavel);
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 0 var(--borda-raio) var(--borda-raio) 0;
+        }
+
+        .resultado-bloco h4 {
+            font-size: 10pt;
+            color: var(--cor-principal-agro);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        .resultado-valor {
+            font-size: 15pt;
+            font-weight: bold;
+            color: var(--cor-secundaria-sustentavel);
+        }
+
+        /* Alertas Climáticos Específicos */
+        .alerta-clima-box {
+            padding: 15px;
+            border-radius: var(--borda-raio);
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+        .alerta-clima-box.sucesso { background-color: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+        .alerta-clima-box.perigo { background-color: #fdf2f2; border: 1px solid #fecaca; color: #991b1b; }
+        .alerta-clima-box.aviso { background-color: #fffbeb; border: 1px solid #fef3c7; color: #92400e; }
+
+        /* ==========================================================================
+           10. CERTIFICADO DIGITAL E CONFIGURAÇÃO DE IMPRESSÃO
+           ========================================================================== */
+        #secao-certificado {
+            margin-top: 30px;
+            border-top: 2px dashed var(--cor-contraste-ouro);
+            padding-top: 25px;
+        }
+
+        .certificado-borda {
+            background-color: #fffdf9;
+            border: 6px double var(--cor-contraste-ouro);
+            padding: 30px;
+            text-align: center;
+            border-radius: var(--borda-raio);
+            margin-bottom: 20px;
+        }
+
+        .certificado-borda h2 {
+            font-family: 'Times New Roman', serif;
+            font-size: 20pt;
+            color: var(--cor-principal-agro);
+            border: none;
+            margin-bottom: 15px;
+        }
+
+        .certificado-texto {
+            font-size: 11pt;
+            color: #374151;
+            margin-bottom: 20px;
+        }
+
+        .certificado-selo {
+            display: inline-block;
+            border: 2px solid var(--cor-principal-agro);
+            padding: 8px 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: var(--cor-principal-agro);
+            margin-top: 15px;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #secao-certificado, #secao-certificado .certificado-borda, #secao-certificado .certificado-borda * {
+                visibility: visible;
+            }
+            #secao-certificado {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                border: none;
+                padding: 0;
+                margin: 0;
+            }
+            #btn-imprimir-certificado {
+                display: none !important;
+            }
+        }
+
+        /* ==========================================================================
+           11. RODAPÉ
+           ========================================================================== */
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 40px;
+            background-color: #e5e7eb;
+            color: #4b5563;
+            font-size: 9.5pt;
+            border-top: 1px solid #d1d5db;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="tela-bloqueio" role="dialog" aria-modal="true" aria-labelledby="boas-vindas-titulo">
+        <article class="bloqueio-conteudo">
+            <div class="bloqueio-badge">Agrinho 2026</div>
+            <h1 id="boas-vindas-titulo">Bem-vindo ao AgroViva</h1>
+            <p>Ecossistema tecnológico inteligente: Créditos de Carbono, Mercado de Insumos, Análise Agroclimatológica e IA.</p>
+            
+            <div class="bloqueio-status">
+                <span class="status-icone">🔒</span>
+                <p>Acesse o painel integrado para transformar a sustentabilidade da sua lavoura.</p>
+            </div>
+
+            <button type="button" id="btn-desbloquear">Inicializar Painel AgroViva</button>
+        </article>
+    </div>
+
+    <header>
+        <div class="header-container">
+            <h1>AgroViva</h1>
+            <p>Agro Forte, Futuro Sustentável: O Equilíbrio Perfeito entre Produção e Meio Ambiente</p>
+        </div>
+        
+        <nav aria-label="Menu Principal do Sistema">
+            <button type="button" class="aba-link ativa" data-aba="simulador-carbono">📊 Crédito de Carbono</button>
+            <button type="button" class="aba-link" data-aba="mercado-loja">🛒 Loja e Mercado</button>
+            <button type="button" class="aba-link" data-aba="clima-plantio">🌦️ Clima e Alertas</button>
+            <button type="button" class="aba-link" data-aba="assistente-ia">🤖 Assistente Virtual IA</button>
+        </nav>
+    </header>
+
+    <main>
+        
+        <div id="painel-erro" role="alert" aria-live="assertive"></div>
+
+        <section id="painel-conquistas" aria-labelledby="titulo-conquistas">
+            <h2 id="titulo-conquistas">🏅 Suas Conquistas Ambientais</h2>
+            <div class="medalhas-container">
+                <article class="medalha-card " id="medalha-solo">
+                    <span class="medalha-icone">🌱</span>
+                    <h3>Protetor do Solo</h3>
+                    <p>Use manejo ILPF no simulador.</p>
+                </article>
+                <article class="medalha-card " id="medalha-carbono">
+                    <span class="medalha-icone">💎</span>
+                    <h3>Carbono Zero</h3>
+                    <p>Retenha mais de 100t de CO₂.</p>
+                </article>
+                <article class="medalha-card " id="medalha-investidor">
+                    <span class="medalha-icone">🚀</span>
+                    <h3>Investidor Verde</h3>
+                    <p>Simule um teste de insumo.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="simulador-carbono" class="aba-conteudo ativa">
+            <h2>Simulador de Créditos de Carbono</h2>
+            <p class="instrucao">Estime a retenção anual de CO₂ da sua propriedade agrícola e converta em ativos econômicos.</p>
+            
+            <form id="formulario-carbono" novalidate>
+                <article class="campo-grupo">
+                    <label for="tamanho-area">Tamanho da Área Conservada (em hectares):</label>
+                    <input type="number" id="tamanho-area" placeholder="Ex: 80" required min="0.1" step="any">
+                </article>
+
+                <article class="campo-grupo">
+                    <label for="tipo-manejo">Prática de Manejo Adotada:</label>
+                    <select id="tipo-manejo" required>
+                        <option value="" disabled selected>Selecione o manejo...</option>
+                        <option value="direto">Plantio Direto (Alta retenção orgânica)</option>
+                        <option value="ilpf">Integração Lavoura-Pecuária-Floresta (ILPF)</option>
+                        <option value="tradicional">Cultivo Tradicional com Baixo Carbono</option>
+                    </select>
+                </article>
+
+                <button type="submit" id="btn-calcular">Calcular e Gerar Créditos</button>
+            </form>
+
+            <article class="painel-saida" id="resultados-carbono" aria-live="polite">
+                <h3>Painel de Impacto Ambiental</h3>
+                <div id="painel-dados-carbono">
+                    <p class="mensagem-aguardo">Insira as informações acima para processar o balanço ecológico.</p>
+                </div>
+            </article>
+
+            <article id="secao-certificado" class="esconder-elemento">
+                <div class="certificado-borda">
+                    <h2>Certificado Produtor Sustentável</h2>
+                    <p class="certificado-texto">Certificamos que a propriedade analisada no ecossistema <strong>AgroViva</strong> atingiu altos índices de eficiência ecológica e sequestro de carbono, contribuindo ativamente para as metas globais de sustentabilidade agrícola em 2026.</p>
+                    <div id="certificado-dados-dinamicos"></div>
+                    <div class="certificado-selo">Selo Agrinho 2026</div>
+                </div>
+                <button type="button" id="btn-imprimir-certificado">📄 Imprimir Certificado Oficial</button>
+            </article>
+        </section>
+
+        <section id="mercado-loja" class="aba-conteudo">
+            <h2>Mercado Agrícola & Loja de Insumos</h2>
+            
+            <article class="sub-bloco">
+                <h3>Cotação das Culturas por Tonelada</h3>
+                <p class="instrucao">Gráfico de desempenho comercial em tempo real. Observe como as flutuações climáticas impactam as barras de preço.</p>
+                
+                <div class="grafico-container" aria-label="Gráfico comparativo de preços entre Tomate e Pepino">
+                    <div class="grafico-barra-grupo">
+                        <span class="grafico-label">🍅 Tomate:</span>
+                        <div class="grafico-barra-fundo">
+                            <div id="barra-tomate" class="grafico-barra-preenchimento" style="width: 50%;"></div>
+                        </div>
+                        <span id="valor-tomate" class="grafico-preco">R$ 3.000 / t</span>
+                    </div>
+
+                    <div class="grafico-barra-grupo">
+                        <span class="grafico-label">🥒 Pepino:</span>
+                        <div class="grafico-barra-fundo">
+                            <div id="barra-pepino" class="grafico-barra-preenchimento destaque-alta" style="width: 80%;"></div>
+                        </div>
+                        <span id="valor-pepino" class="grafico-preco">R$ 4.800 / t ▲</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="sub-bloco">
+                <h3>Adquirir e Testar Tecnologia na Lavoura</h3>
+                <p class="instrucao">Use o saldo gerado pelos seus Créditos de Carbono ou o fundo fictício do app para comprar e testar insumos inovadores.</p>
+                
+                <div class="saldo-container">
+                    <p>Seu Saldo Disponível: <strong id="saldo-exibicao">R$ 0,00</strong></p>
+                </div>
+
+                <form id="formulario-compra" novalidate>
+                    <article class="campo-grupo">
+                        <label for="selecao-produto">Selecione o Insumo Tecnológico:</label>
+                        <select id="selecao-produto" required>
+                            <option value="" disabled selected>Escolha um produto...</option>
+                            <option value="biofertilizante" data-preco="1500">Biofertilizante Enriquecido (Custo: R$ 1.500)</option>
+                            <option value="sementes" data-preco="2500">Sementes de Cobertura Alta Performance (Custo: R$ 2.500)</option>
+                            <option value="sensor" data-preco="4000">Sensores de Humidade IoT Smart Agro (Custo: R$ 4.000)</option>
+                        </select>
+                    </article>
+
+                    <button type="submit" id="btn-testar-produto">Confirmar Compra e Testar Desempenho</button>
+                </form>
+
+                <div class="painel-saida" id="resultados-compra" aria-live="polite">
+                    <div id="painel-dados-compra">
+                        <p class="mensagem-aguardo">Selecione e adquira um insumo para rodar a simulação de produtividade.</p>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section id="clima-plantio" class="aba-conteudo">
+            <h2>Simulador de Cenários Climáticos</h2>
+            <p class="instrucao">Escolha um cenário meteorológico extremo para testar a resiliência da sua lavoura e ver o impacto imediato nos preços de mercado.</p>
+
+            <form id="formulario-clima" novalidate>
+                <article class="campo-grupo">
+                    <label for="cenario-clima">Selecione a Condição Climática:</label>
+                    <select id="cenario-clima" required>
+                        <option value="" disabled selected>Escolha um clima...</option>
+                        <option value="ideal">Chuva Ideal & Sol Moderado (Equilíbrio)</option>
+                        <option value="seca">Seca Severa / Estiagem Prolongada</option>
+                        <option value="geada">Frente Fria / Risco de Geada</option>
+                    </select>
+                </article>
+
+                <button type="submit" id="btn-analisar-clima">Aplicar Clima no Sistema</button>
+            </form>
+
+            <article class="painel-saida" id="resultados-clima" aria-live="polite">
+                <h3>Diagnóstico Agroclimático & Janela de Plantio</h3>
+                <div id="painel-dados-clima">
+                    <p class="mensagem-aguardo">Aplique um cenário climático para receber os alertas e recomendações de plantio para o Tomate e o Pepino.</p>
+                </div>
+            </article>
+        </section>
+
+        <section id="assistente-ia" class="aba-conteudo">
+            <h2>Assistente Virtual - Inteligência Lógica AgroViva</h2>
+            <p class="instrucao">Nossa IA está carregada com todas as diretrizes do app. Pergunte sobre: <strong>"solo"</strong>, <strong>"carbono"</strong>, <strong>"clima"</strong>, <strong>"tomate"</strong> ou <strong>"pepino"</strong>.</p>
+            
+            <article class="chat-container">
+                <div id="chat-historico" aria-live="polite">
+                    <p class="chat-msg bot">Olá! Analisei todas as abas e regras de negócios do AgroViva. Digite sua dúvida sobre sustentabilidade, mercado ou manejo e eu darei o diagnóstico preciso.</p>
+                </div>
+
+                <form id="formulario-chat" novalidate>
+                    <div class="chat-input-grupo">
+                        <input type="text" id="chat-mensagem-usuario" placeholder="Digite uma palavra-chave para a IA analisar..." required autocomplete="off">
+                        <button type="submit" id="btn-enviar-chat">Consultar IA</button>
+                    </div>
+                </form>
+            </article>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© 2026 AgroViva - Plataforma Autoral Desenvolvida para o Ensino Médio</p>
+        <p>Subcategoria 3: Programação Front-End | Concurso Agrinho 2026</p>
+    </footer>
+
+    <script>
+        /* ==========================================================================
+           1. ESTADO GLOBAL DA APLICAÇÃO (MEMÓRIA DO SISTEMA)
+           ========================================================================== */
+        const estadoSistema = {
+            saldoDisponivel: 0,
+            carbonoRetidoTotal: 0,
+            climaAtual: 'ideal',
+            medalhas: {
+                solo: false,
+                carbono: false,
+                investidor: false
+            }
+        };
+
+        // Garante sincronização de tela e saldo na inicialização do documento
+        document.addEventListener('DOMContentLoaded', () => {
+            atualizarExibicaoSaldo();
+        });
+
+        function atualizarExibicaoSaldo() {
+            const elementoSaldo = document.querySelector('#saldo-exibicao');
+            if (elementoSaldo) {
+                elementoSaldo.innerText = `R$ ${estadoSistema.saldoDisponivel.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            }
+        }
+
+        /* ==========================================================================
+           2. CONTROLE DA TELA DE BLOQUEIO E DO MENU DE ABAS
+           ========================================================================== */
+        // Tela de Bloqueio
+        const btnDesbloquear = document.querySelector('#btn-desbloquear');
+        const telaBloqueio = document.querySelector('#tela-bloqueio');
+
+        btnDesbloquear.addEventListener('click', () => {
+            // CORREGIDO: Usa a classe do utilitário CSS correto
+            telaBloqueio.classList.add('esconder-elemento');
+        });
+
+        // Sistema de Abas
+        const botoesAbas = document.querySelectorAll('.aba-link');
+        const conteudosAbas = document.querySelectorAll('.aba-conteudo');
+
+        botoesAbas.forEach(botao => {
+            botao.addEventListener('click', () => {
+                botoesAbas.forEach(b => b.classList.remove('ativa'));
+                conteudosAbas.forEach(c => c.classList.remove('ativa'));
+
+                botao.classList.add('ativa');
+                
+                const idAbaAlvo = botao.getAttribute('data-aba');
+                document.querySelector(`#${idAbaAlvo}`).classList.add('ativa');
+            });
+        });
+
+        /* ==========================================================================
+           3. CONFIGURAÇÕES DOS ELEMENTOS GLOBAIS DE ERRO
+           ========================================================================== */
+        const painelErro = document.querySelector('#painel-erro');
+
+        function exibirErroGlobal(mensagem) {
+            painelErro.innerHTML = `<div class="caixa-erro">${mensagem}</div>`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function limparErroGlobal() {
+            painelErro.innerHTML = '';
+        }
+
+        /* ==========================================================================
+           4. LÓGICA DA ABA 1: SIMULADOR DE CARBONO & CERTIFICADO
+           ========================================================================== */
+        const formCarbono = document.querySelector('#formulario-carbono');
+        const inputArea = document.querySelector('#tamanho-area');
+        const selectManejo = document.querySelector('#tipo-manejo');
+        const painelDadosCarbono = document.querySelector('#painel-dados-carbono');
+        const secaoCertificado = document.querySelector('#secao-certificado');
+        const certificadoDadosDinamicos = document.querySelector('#certificado-dados-dinamicos');
+
+        formCarbono.addEventListener('submit', (e) => {
+            e.preventDefault();
+            limparErroGlobal();
+
+            const areaTexto = inputArea.value.trim();
+            const areaNum = parseFloat(areaTexto);
+            const manejo = selectManejo.value;
+
+            if (areaTexto === '' || manejo === '') {
+                exibirErroGlobal('Erro Aba 1: Preencha todos os campos para calcular o carbono.');
+                return;
+            }
+            if (isNaN(areaNum) || areaNum <= 0) {
+                exibirErroGlobal('Erro Aba 1: O tamanho da área deve ser um número maior que zero.');
+                return;
+            }
+
+            let fator = 1.1;
+            let nomeManejo = 'Cultivo Tradicional';
+            if (manejo === 'direto') { fator = 2.5; nomeManejo = 'Plantio Direto'; }
+            if (manejo === 'ilpf') { 
+                fator = 4.2; 
+                nomeManejo = 'Integração Lavoura-Pecuária-Floresta (ILPF)'; 
+                desbloquearMedalha('solo');
+            }
+
+            const totalCO2 = areaNum * fator;
+            const precoCredito = 75.00;
+            const ganhoFinanceiro = totalCO2 * precoCredito;
+
+            estadoSistema.carbonoRetidoTotal = totalCO2;
+            estadoSistema.saldoDisponivel += ganhoFinanceiro;
+            atualizarExibicaoSaldo();
+
+            if (totalCO2 >= 100) {
+                desbloquearMedalha('carbono');
+            }
+
+            painelDadosCarbono.innerHTML = `
+                <div class="resultado-bloco">
+                    <h4>Balanço da Propriedade</h4>
+                    <p>Área: <strong>${areaNum.toLocaleString('pt-BR')} ha</strong> | Manejo: <strong>${nomeManejo}</strong></p>
+                </div>
+                <div class="resultado-bloco">
+                    <h4>Retenção de CO₂ Estimada</h4>
+                    <p class="resultado-valor">${totalCO2.toLocaleString('pt-BR', { maximumFractionDigits: 2 })} t / ano</p>
+                </div>
+                <div class="resultado-bloco">
+                    <h4>Ativos Convertidos (Créditos Gerados)</h4>
+                    <p class="resultado-valor">R$ ${ganhoFinanceiro.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    <p>Este valor foi adicionado ao seu Saldo de Compras na Aba de Insumos!</p>
+                </div>
+            `;
+
+            secaoCertificado.classList.remove('esconder-elemento');
+            certificadoDadosDinamicos.innerHTML = `
+                <p><strong>Propriedade Analisada:</strong> ${areaNum.toLocaleString('pt-BR')} Hectares</p>
+                <p><strong>Manejo de Sustentabilidade:</strong> ${nomeManejo}</p>
+                <p><strong>Volume Certificado de Retenção:</strong> ${totalCO2.toLocaleString('pt-BR', { maximumFractionDigits: 2 })} Toneladas de CO₂/ano</p>
+            `;
+        });
+
+        document.querySelector('#btn-imprimir-certificado').addEventListener('click', () => {
+            window.print();
+        });
+
+        /* ==========================================================================
+           5. LÓGICA DA ABA 2: LOJA DE INSUMOS & GRÁFICO DINÂMICO
+           ========================================================================== */
+        const formCompra = document.querySelector('#formulario-compra');
+        const selectProduto = document.querySelector('#selecao-produto');
+        const painelDadosCompra = document.querySelector('#painel-dados-compra');
+
+        formCompra.addEventListener('submit', (e) => {
+            e.preventDefault();
+            limparErroGlobal();
+
+            const opcaoSelecionada = selectProduto.options[selectProduto.selectedIndex];
+            if (!opcaoSelecionada.value) {
+                exibirErroGlobal('Erro Aba 2: Selecione um insumo para simular o teste.');
+                return;
+            }
+
+            const custoProduto = parseFloat(opcaoSelecionada.getAttribute('data-preco'));
+            const nomeProduto = opcaoSelecionada.text;
+
+            if (estadoSistema.saldoDisponivel < custoProduto) {
+                exibirErroGlobal(`Saldo Insuficiente! O produto custa R$ ${custoProduto.toLocaleString('pt-BR')} e você tem apenas R$ ${estadoSistema.saldoDisponivel.toLocaleString('pt-BR')}. Vá para a Aba 1 e gere mais créditos de carbono simulando uma área maior.`);
+                return;
+            }
+
+            estadoSistema.saldoDisponivel -= custoProduto;
+            atualizarExibicaoSaldo();
+            desbloquearMedalha('investidor');
+
+            let incrementoProdutividade = 15;
+            let notaEcologica = "Excelente redução de químicos nocivos.";
+
+            if (opcaoSelecionada.value === 'sensor' && estadoSistema.climaAtual === 'seca') {
+                incrementoProdutividade = 45;
+                notaEcologica = "Gestão hídrica automatizada inteligente evitou o colapso por seca.";
+            } else if (opcaoSelecionada.value === 'biofertilizante') {
+                incrementoProdutividade = 25;
+                notaEcologica = "Recuperação microbiológica ativa do solo sem aditivos minerais.";
+            }
+
+            painelDadosCompra.innerHTML = `
+                <div class="resultado-bloco" style="background-color: #eff6ff; border-left-color: #3b82f6;">
+                    <h4>Simulação de Compra Efetuada</h4>
+                    <p>Item: <strong>${nomeProduto}</strong> adquirido com fundos verdes.</p>
+                </div>
+                <div class="resultado-bloco">
+                    <h4>Resultado do Teste em Campo</h4>
+                    <p class="resultado-valor">+ ${incrementoProdutividade}% de Produtividade</p>
+                    <p>Impacto: ${notaEcologica}</p>
+                </div>
+            `;
+        });
+
+        /* ==========================================================================
+           6. LÓGICA DA ABA 3: SIMULADOR DE CLIMA E ATUALIZAÇÃO DO GRÁFICO
+           ========================================================================== */
+        const formClima = document.querySelector('#formulario-clima');
+        const selectClima = document.querySelector('#cenario-clima');
+        const painelDadosClima = document.querySelector('#painel-dados-clima');
+
+        const barraTomate = document.querySelector('#barra-tomate');
+        const barraPepino = document.querySelector('#barra-pepino');
+        const valorTomate = document.querySelector('#valor-tomate');
+        const valorPepino = document.querySelector('#valor-pepino');
+
+        formClima.addEventListener('submit', (e) => {
+            e.preventDefault();
+            limparErroGlobal();
+
+            const clima = selectClima.value;
+            if (clima === '') {
+                exibirErroGlobal('Erro Aba 3: Selecione um cenário climático para testar.');
+                return;
+            }
+
+            estadoSistema.climaAtual = clima;
+
+            let mensagemAlerta = '';
+            let classeAlerta = '';
+            
+            let precoTomateNum = 3000;
+            let precoPepinoNum = 4800;
+            let larguraTomate = "50%";
+            let larguraPepino = "80%";
+
+            if (clima === 'ideal') {
+                mensagemAlerta = '🌦️ Cenário Ideal: Clima estável. Condições ótimas para o plantio imediato tanto do Tomate quanto do Pepino. Baixo risco de perdas aeróbicas.';
+                classeAlerta = 'sucesso';
+                precoTomateNum = 2800; larguraTomate = "45%";
+                precoPepinoNum = 3900; larguraPepino = "65%";
+            } else if (clima === 'seca') {
+                mensagemAlerta = '🚨 Alerta de Seca Severa: Alta evapotranspiração do solo. Momento CRÍTICO. Não plante Tomate sem irrigação controlada por Sensores IoT. O Pepino resiste um pouco melhor, mas o preço disparou no mercado devido à escassez global!';
+                classeAlerta = 'perigo';
+                precoTomateNum = 5100; larguraTomate = "75%";
+                precoPepinoNum = 6800; larguraPepino = "100%";
+            } else if (clima === 'geada') {
+                mensagemAlerta = '⚠️ Alerta de Frente Fria: Risco iminente de geada em folhas jovens. Recomenda-se retardar o plantio do Tomate ou aplicar coberturas vegetais protetoras (Sementes de Alta Performance mitigam o dano).';
+                classeAlerta = 'aviso';
+                precoTomateNum = 4200; larguraTomate = "65%";
+                precoPepinoNum = 5000; larguraPepino = "82%";
+            }
+
+            painelDadosClima.innerHTML = `
+                <div class="alerta-clima-box ${classeAlerta}">
+                    ${mensagemAlerta}
+                </div>
+            `;
+
+            barraTomate.style.width = larguraTomate;
+            barraPepino.style.width = larguraPepino;
+            valorTomate.innerText = `R$ ${precoTomateNum.toLocaleString('pt-BR')} / t`;
+            valorPepino.innerText = `R$ ${precoPepinoNum.toLocaleString('pt-BR')} / t ${clima === 'seca' ? '▲▲' : '▲'}`;
+        });
+
+        /* ==========================================================================
+           7. LÓGICA DA ABA 4: CHAT DA IA COM CONHECIMENTO INTEGRADO
+           ========================================================================== */
+        const formChat = document.querySelector('#formulario-chat');
+        const inputChat = document.querySelector('#chat-mensagem-usuario');
+        const chatHistorico = document.querySelector('#chat-historico');
+
+        formChat.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const pergunta = inputChat.value.trim().toLowerCase();
+            if (pergunta === '') return;
+
+            chatHistorico.innerHTML += `<p class="chat-msg usuario">${inputChat.value}</p>`;
+            inputChat.value = '';
+
+            let respostaBot = 'Análise do Assistente AgroViva: Palavra-chave não mapeada no banco de dados. Tente usar termos centrais como: "solo", "carbono", "clima", "tomate" ou "pepino".';
+
+            if (pergunta.includes('solo') || pergunta.includes('manejo') || pergunta.includes('ilpf')) {
+                respostaBot = 'Diagnóstico de Solo: Para fixar nutrientes de forma sustentável e evitar erosões, use a Integração Lavoura-Pecuária-Floresta (ILPF) ou Plantio Direto. Isso aumenta seu fator de retenção orgânica para até 4.2 t/ha de carbono ao ano!';
+            } else if (pergunta.includes('carbono') || pergunta.includes('crédito') || pergunta.includes('credito')) {
+                respostaBot = 'Mercado de Carbono: Cada tonelada de CO₂ evitada equivale a 1 Crédito de Carbono, avaliado em R$ 75,00 no AgroViva. Preservar o meio ambiente gera ativos financeiros reais reutilizáveis no nosso simulador de insumos.';
+            } else if (pergunta.includes('clima') || pergunta.includes('seca') || pergunta.includes('geada')) {
+                respostaBot = 'Inteligência Climática: Mudanças extremas geram escassez e elevam o valor das hortaliças. Sob Seca Severa, a melhor decision estratégica é investir nos Sensores IoT na Loja para otimizar e salvar a humidade da terra.';
+            } else if (pergunta.includes('tomate')) {
+                respostaBot = 'Cultura - Tomate: É extremamente sensível ao estresse hídrico e à geada. Em climas desfavoráveis, seu valor sobe devido às perdas de campo. Exige alto monitoramento e biofertilização.';
+            } else if (pergunta.includes('pepino')) {
+                respostaBot = 'Cultura - Pepino: Apresenta excelente resposta mercadológica ativa no ecossistema AgroViva. Em cenários de estiagem, seu valor bate recordes históricos (R$ 6.800/t), sendo uma ótima alternativa de alta rentabilidade.';
+            }
+
+            setTimeout(() => {
+                chatHistorico.innerHTML += `<p class="chat-msg bot">${respostaBot}</p>`;
+                chatHistorico.scrollTop = chatHistorico.scrollHeight;
+            }, 400);
+        });
+
+        /* ==========================================================================
+           8. SISTEMA DE AUXÍLIO DE CONQUISTAS (GAMIFICAÇÃO)
+           ========================================================================== */
+        function desbloquearMedalha(chave) {
+            if (estadoSistema.medalhas[chave] === false) {
+                estadoSistema.medalhas[chave] = true;
+                const cardMedalha = document.querySelector(`#medalha-${chave}`);
+                if (cardMedalha) {
+                    cardMedalha.classList.remove('bloqueada');
+                    cardMedalha.classList.add('desbloqueada');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
