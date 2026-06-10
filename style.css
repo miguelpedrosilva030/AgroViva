@@ -1,1 +1,603 @@
+/* ==========================================================================
+   1. VARIÁVEIS DE AMBIENTE (PALETA AGRO/SUSTENTABILIDADE DE ALTO CONTRASTE)
+   ========================================================================== */
+:root {
+    /* Cores Principais */
+    --cor-principal-agro: #1b4332;      /* Verde escuro floresta - Identidade Forte */
+    --cor-secundaria-sustentavel: #2d6a4f; /* Verde médio para botões e realces */
+    --cor-contraste-ouro: #d4a373;      /* Tom de terra/ouro para destaques e conquistas */
+    
+    /* Tons de Apoio */
+    --cor-fundo-claro: #f4f7f5;         /* Cinza esverdeado claro para conforto visual */
+    --cor-fundo-card: #ffffff;          /* Blanco puro para cartões de conteúdo */
+    --cor-texto-escuro: #111111;        /* Alto contraste para leitura de textos */
+    --cor-texto-claro: #ffffff;         /* Texto claro sobre fundos escuros */
+    --cor-erro-alerta: #bc4749;         /* Vermelho opaco acessível para validações */
+    --cor-borda: #e5e7eb;
+    
+    /* Tipografia e Efeitos */
+    --fonte-principal: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --borda-raio: 8px;
+    --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
 
+/* ==========================================================================
+   2. RESET GLOBAL E CONFIGURAÇÕES DE PÁGINA
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    background-color: var(--cor-fundo-claro);
+    color: var(--cor-texto-escuro);
+    line-height: 1.6;
+    font-size: 11pt;
+}
+
+/* Classes Utilitárias Globais */
+.esconder-elemento {
+    display: none !important;
+}
+
+.instrucao {
+    font-size: 10.5pt;
+    color: #4b5563;
+    margin-bottom: 20px;
+}
+
+/* ==========================================================================
+   3. TELA DE BLOQUEIO INTERATIVA (SPLASH SCREEN)
+   ========================================================================== */
+#tela-bloqueio {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--cor-principal-agro);
+    color: var(--cor-texto-claro);
+    z-index: 9999;
+    display: block;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.bloqueio-conteudo {
+    display: block;
+    max-width: 550px;
+    margin: 8% auto;
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 40px;
+    border-radius: var(--borda-raio);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.bloqueio-badge {
+    display: inline-block;
+    background-color: var(--cor-contraste-ouro);
+    color: var(--cor-texto-escuro);
+    padding: 6px 16px;
+    font-weight: bold;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    font-size: 10pt;
+    text-transform: uppercase;
+}
+
+#tela-bloqueio h1 {
+    font-size: 22pt;
+    margin-bottom: 15px;
+}
+
+#tela-bloqueio p {
+    font-size: 12pt;
+    color: #e0e0e0;
+    margin-bottom: 25px;
+}
+
+.bloqueio-status {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: var(--borda-raio);
+    margin-bottom: 30px;
+    border-left: 4px solid var(--cor-contraste-ouro);
+    text-align: left;
+}
+
+.bloqueio-status p {
+    font-size: 10pt;
+    margin: 0;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   4. CABEÇALHO E MENU DE ABAS (NAVEGAÇÃO COM ABAS)
+   ========================================================================== */
+header {
+    background-color: var(--cor-principal-agro);
+    color: var(--cor-texto-claro);
+    padding: 30px 20px 0 20px;
+    text-align: center;
+    border-bottom: 5px solid var(--cor-contraste-ouro);
+}
+
+.header-container h1 {
+    font-size: 26pt;
+    margin-bottom: 5px;
+}
+
+.header-container p {
+    font-size: 12pt;
+    color: #cbd5e1;
+    margin-bottom: 25px;
+}
+
+nav {
+    display: block;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.aba-link {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--cor-texto-claro);
+    border: none;
+    border-radius: var(--borda-raio) var(--borda-raio) 0 0;
+    font-size: 10.5pt;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.aba-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.aba-link.ativa {
+    background-color: var(--cor-fundo-claro);
+    color: var(--cor-principal-agro);
+    border: 1px solid var(--cor-borda);
+    border-bottom: none;
+}
+
+/* Controlar a exibição das abas de conteúdo */
+.aba-conteudo {
+    display: none !important;
+}
+
+.aba-conteudo.ativa {
+    display: block !important;
+}
+
+/* ==========================================================================
+   5. LAYOUT PRINCIPAL, SEÇÕES E FORMULÁRIOS
+   ========================================================================== */
+main {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+section {
+    background-color: var(--cor-fundo-card);
+    padding: 30px;
+    margin-bottom: 25px;
+    border-radius: var(--borda-raio);
+    box-shadow: var(--sombra-suave);
+    border-top: 4px solid var(--cor-secundaria-sustentavel);
+}
+
+section h2 {
+    font-size: 15pt;
+    color: var(--cor-principal-agro);
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.sub-bloco {
+    display: block;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--cor-borda);
+}
+
+.sub-bloco h3 {
+    font-size: 12pt;
+    color: var(--cor-secundaria-sustentavel);
+    margin-bottom: 10px;
+}
+
+/* Formulários e Inputs */
+.campo-grupo {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.campo-grupo label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 10.5pt;
+}
+
+.campo-grupo input[type="number"],
+.campo-grupo input[type="text"],
+.campo-grupo select {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #cccccc;
+    border-radius: var(--borda-raio);
+    font-size: 11pt;
+    font-family: var(--fonte-principal);
+}
+
+.campo-grupo input:focus,
+.campo-grupo select:focus {
+    outline: none;
+    border-color: var(--cor-secundaria-sustentavel);
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background-color: var(--cor-secundaria-sustentavel);
+    color: var(--cor-texto-claro);
+    border: none;
+    border-radius: var(--borda-raio);
+    font-size: 12pt;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: var(--cor-principal-agro);
+}
+
+/* ==========================================================================
+   6. PAINEL DE GAMIFICAÇÃO (MEDALHAS)
+   ========================================================================== */
+#painel-conquistas {
+    border-top: 4px solid var(--cor-contraste-ouro);
+}
+
+.medalhas-container {
+    display: block;
+    text-align: center;
+}
+
+.medalha-card {
+    display: inline-block;
+    width: 30%;
+    margin: 1%;
+    padding: 15px 10px;
+    background-color: var(--cor-fundo-claro);
+    border-radius: var(--borda-raio);
+    border: 2px solid var(--cor-borda);
+    vertical-align: top;
+    transition: all 0.3s ease;
+}
+
+.medalha-card h3 {
+    font-size: 10pt;
+    margin: 8px 0 4px 0;
+    color: var(--cor-texto-escuro);
+}
+
+.medalha-card p {
+    font-size: 8.5pt;
+    color: #666666;
+    line-height: 1.3;
+}
+
+.medalha-icone {
+    display: block;
+    font-size: 24pt;
+    filter: grayscale(100%);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+}
+
+.medalha-card.desbloqueada {
+    background-color: #fffdf5;
+    border-color: var(--cor-contraste-ouro);
+    box-shadow: 0 4px 10px rgba(212, 163, 115, 0.2);
+}
+
+.medalha-card.desbloqueada .medalha-icone {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* ==========================================================================
+   7. GRÁFICO DE TENDÊNCIA DE MERCADO (SEM FLEX/GRID)
+   ========================================================================== */
+.grafico-container {
+    background-color: var(--cor-fundo-claro);
+    padding: 20px;
+    border-radius: var(--borda-raio);
+    margin-bottom: 20px;
+    border: 1px solid var(--cor-borda);
+}
+
+.grafico-barra-grupo {
+    display: block;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.grafico-label {
+    display: block;
+    width: 15%;
+    float: left;
+    font-weight: bold;
+    padding-top: 4px;
+}
+
+.grafico-barra-fundo {
+    display: block;
+    width: 65%;
+    float: left;
+    background-color: #e5e7eb;
+    height: 30px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 2%;
+}
+
+.grafico-barra-preenchimento {
+    display: block;
+    height: 100%;
+    background-color: #9ca3af;
+    width: 0%;
+    transition: width 0.8s ease-out;
+}
+
+.grafico-barra-preenchimento.destaque-alta {
+    background-color: var(--cor-secundaria-sustentavel);
+}
+
+.grafico-preco {
+    display: block;
+    width: 18%;
+    float: left;
+    font-weight: bold;
+    text-align: right;
+    padding-top: 4px;
+    color: var(--cor-texto-escuro);
+}
+
+/* ==========================================================================
+   8. CHAT DA IA AGROSUSTENTÁVEL
+   ========================================================================== */
+.chat-container {
+    border: 2px solid var(--cor-borda);
+    border-radius: var(--borda-raio);
+    background-color: #f9fafb;
+    overflow: hidden;
+}
+
+#chat-historico {
+    display: block;
+    height: 250px;
+    overflow-y: auto;
+    padding: 15px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+
+.chat-msg {
+    display: block;
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: var(--borda-raio);
+    margin-bottom: 12px;
+    font-size: 10.5pt;
+}
+
+.chat-msg.bot {
+    background-color: #e2e8f0;
+    color: var(--cor-texto-escuro);
+    margin-right: auto;
+    border-left: 4px solid var(--cor-principal-agro);
+}
+
+.chat-msg.usuario {
+    background-color: var(--cor-secundaria-sustentavel);
+    color: var(--cor-texto-claro);
+    margin-left: auto;
+    text-align: right;
+}
+
+.chat-input-grupo {
+    display: block;
+    padding: 10px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+#chat-mensagem-usuario {
+    width: 78%;
+    float: left;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: var(--borda-raio);
+}
+
+#btn-enviar-chat {
+    width: 20%;
+    float: right;
+    padding: 10px;
+    font-size: 10.5pt;
+}
+
+/* ==========================================================================
+   9. INTERFACES DINÂMICAS: ERROS, RESULTADOS E SALDO
+   ========================================================================== */
+#painel-erro {
+    margin-bottom: 20px;
+}
+
+.caixa-erro {
+    background-color: #fdf2f2;
+    border: 2px solid var(--cor-erro-alerta);
+    color: var(--cor-erro-alerta);
+    padding: 15px;
+    border-radius: var(--borda-raio);
+    font-weight: bold;
+}
+
+.saldo-container {
+    background-color: #fff7ed;
+    border: 1px dashed var(--cor-contraste-ouro);
+    padding: 12px;
+    border-radius: var(--borda-raio);
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 12pt;
+}
+
+.saldo-container strong {
+    color: #c2410c;
+}
+
+.painel-saida {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: #fafafa;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--borda-raio);
+}
+
+.painel-saida h3 {
+    font-size: 12pt;
+    color: var(--cor-principal-agro);
+    margin-bottom: 12px;
+}
+
+.mensagem-aguardo {
+    color: #71717a;
+    font-style: italic;
+    text-align: center;
+}
+
+.resultado-bloco {
+    background-color: #f0fdf4;
+    border-left: 5px solid var(--cor-secundaria-sustentavel);
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 0 var(--borda-raio) var(--borda-raio) 0;
+}
+
+.resultado-bloco h4 {
+    font-size: 10pt;
+    color: var(--cor-principal-agro);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+}
+
+.resultado-valor {
+    font-size: 15pt;
+    font-weight: bold;
+    color: var(--cor-secundaria-sustentavel);
+}
+
+/* Alertas Climáticos Específicos */
+.alerta-clima-box {
+    padding: 15px;
+    border-radius: var(--borda-raio);
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+.alerta-clima-box.sucesso { background-color: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+.alerta-clima-box.perigo { background-color: #fdf2f2; border: 1px solid #fecaca; color: #991b1b; }
+.alerta-clima-box.aviso { background-color: #fffbeb; border: 1px solid #fef3c7; color: #92400e; }
+
+/* ==========================================================================
+   10. CERTIFICADO DIGITAL E CONFIGURAÇÃO DE IMPRESSÃO
+   ========================================================================== */
+#secao-certificado {
+    margin-top: 30px;
+    border-top: 2px dashed var(--cor-contraste-ouro);
+    padding-top: 25px;
+}
+
+.certificado-borda {
+    background-color: #fffdf9;
+    border: 6px double var(--cor-contraste-ouro);
+    padding: 30px;
+    text-align: center;
+    border-radius: var(--borda-raio);
+    margin-bottom: 20px;
+}
+
+.certificado-borda h2 {
+    font-family: 'Times New Roman', serif;
+    font-size: 20pt;
+    color: var(--cor-principal-agro);
+    border: none;
+    margin-bottom: 15px;
+}
+
+.certificado-texto {
+    font-size: 11pt;
+    color: #374151;
+    margin-bottom: 20px;
+}
+
+.certificado-selo {
+    display: inline-block;
+    border: 2px solid var(--cor-principal-agro);
+    padding: 8px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--cor-principal-agro);
+    margin-top: 15px;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #secao-certificado, #secao-certificado .certificado-borda, #secao-certificado .certificado-borda * {
+        visibility: visible;
+    }
+    #secao-certificado {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+    #btn-imprimir-certificado {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   11. RODAPÉ
+   ========================================================================== */
+footer {
+    text-align: center;
+    padding: 25px 20px;
+    margin-top: 40px;
+    background-color: #e5e7eb;
+    color: #4b5563;
+    font-size: 9.5pt;
+    border-top: 1px solid #d1d5db;
+}
