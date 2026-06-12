@@ -5,8 +5,6 @@
 
 Aplicação web interativa voltada para o setor agrícola sustentável, alinhada ao tema oficial do concurso: *"Agro forte, futuro sustentável: equilíbrio entre produção e meio ambiente"*.
 
-**🔗 Acesse o projeto:** [https://miguelpedrosilva030.github.io/agroviva/](https://miguelpedrosilva030.github.io/agroviva/)
-
 ---
 
 ## 🎯 Objetivo
