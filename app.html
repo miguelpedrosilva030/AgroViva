@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroViva - Plataforma</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-plataforma">
+
+    <nav class="navbar-moderna">
+        <div class="nav-container">
+            <img src="img/logo-agroviva.png" alt="AgroViva" class="nav-logo-pequena">
+            <div class="nav-links">
+                <a href="#dashboard">Visão Geral</a>
+                <a href="#ferramentas">Simuladores</a>
+                <a href="#jogo">MiniGame</a>
+                <a href="index.html" class="btn-sair">Sair</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-app" style="background-image: linear-gradient(rgba(18, 53, 36, 0.8), rgba(18, 53, 36, 0.8)), url('img/hero-plataforma.jpg');">
+        <div class="hero-content">
+            <span class="badge-agrinho">AGRINHO 2026</span>
+            <h1>Guia Tecnológico Contra o Prejuízo</h1>
+            <p>Proteja sua safra das variações climáticas. Descubra a viabilidade da agricultura sustentável e alcance a autossuficiência no campo paranaense.</p>
+            <div class="hero-botoes">
+                <a href="#ferramentas" class="btn-primario">Analisar Minha Propriedade</a>
+                <a href="#desafios" class="btn-secundario">Entender os Riscos</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="desafios" class="secao-branca">
+        <div class="container text-center">
+            <h2 class="titulo-secao">O Campo Pede Estabilidade</h2>
+            <p class="texto-apoio">As mudanças climáticas e as oscilações de mercado são os maiores adversários do produtor rural moderno.</p>
+            
+            <div class="grid-3-colunas mt-40">
+                <div class="card-info">
+                    <h3 class="cor-alerta">Desafio Climático</h3>
+                    <p>Secas severas e geadas inesperadas podem comprometer até 40% da safra se não houver um plano de contingência estratégico.</p>
+                </div>
+                <div class="card-info">
+                    <h3 class="cor-sucesso">A Solução AgroViva</h3>
+                    <p>Nossa plataforma cruza dados de mercado e projeções climáticas para sugerir o manejo exato que blinda o seu caixa contra perdas.</p>
+                </div>
+                <div class="card-info">
+                    <h3 class="cor-destaque">Sustentabilidade Rentável</h3>
+                    <p>Práticas como ILPF e Plantio Direto não apenas salvam o solo, mas geram Créditos de Carbono monetizáveis. O verde que dá lucro.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dashboard" class="secao-cinza">
+        <div class="container">
+            <h2 class="titulo-secao">Visão Geral da Fazenda</h2>
+            <div class="grid-4-colunas">
+                <div class="card-dash">
+                    <span>Clima Atual</span>
+                    <h3 id="clima-atual">Ideal</h3>
+                </div>
+                <div class="card-dash">
+                    <span>Saldo Projetado</span>
+                    <h3 id="saldo">R$ 0,00</h3>
+                </div>
+                <div class="card-dash">
+                    <span>Carbono Retido</span>
+                    <h3 id="carbono">0.00 t</h3>
+                </div>
+                <div class="card-dash card-destaque">
+                    <span>Score de Sustentabilidade</span>
+                    <h3 id="pontos">0</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ferramentas" class="secao-branca">
+        <div class="container">
+            <h2 class="titulo-secao">Central de Inteligência</h2>
+            <div class="grid-2-colunas">
+                
+                <div class="card-ferramenta premium-card">
+                    <div class="ferramenta-header">
+                        <img src="img/icon-financeiro.png" alt="Ícone Financeiro" class="icon-3d">
+                        <h3>Viabilidade Financeira</h3>
+                    </div>
+                    <input type="number" id="custos" placeholder="Custos Totais (R$)">
+                    <input type="number" id="vendas" placeholder="Receita Estimada (R$)">
+                    <button id="btn-calcular" class="btn-acao">Gerar Relatório</button>
+                    <div id="resultado-financeiro" class="resultado-box"></div>
+                </div>
+
+                <div class="card-ferramenta premium-card">
+                    <div class="ferramenta-header">
+                        <img src="img/icon-carbono.png" alt="Ícone Carbono" class="icon-3d">
+                        <h3>Mercado de Carbono</h3>
+                    </div>
+                    <input type="number" id="area-carbono" placeholder="Área Mapeada (ha)">
+                    <select id="manejo" class="select-moderno">
+                        <option value="">Selecione a técnica de plantio...</option>
+                        <option value="tradicional">Plantio Convencional</option>
+                        <option value="direto">Plantio Direto na Palha</option>
+                        <option value="ilpf">Sistema ILPF Integrado</option>
+                    </select>
+                    <button id="btn-carbono" class="btn-acao">Calcular Créditos</button>
+                    <div id="resultado-carbono" class="resultado-box"></div>
+                </div>
+
+                <div class="card-ferramenta premium-card">
+                    <div class="ferramenta-header">
+                        <img src="img/icon-clima.png" alt="Ícone Clima" class="icon-3d">
+                        <h3>Simulador Climático</h3>
+                    </div>
+                    <select id="clima-select" class="select-moderno">
+                        <option value="ideal">Condições Climáticas Ideais</option>
+                        <option value="seca">Déficit Hídrico (Seca)</option>
+                        <option value="geada">Alerta de Frente Fria (Geada)</option>
+                        <option value="chuva">Precipitação Extrema</option>
+                    </select>
+                    <button id="btn-clima" class="btn-acao">Prever Impacto</button>
+                    <div id="resultado-clima" class="resultado-box"></div>
+                </div>
+
+                <div class="card-ferramenta premium-card">
+                    <div class="ferramenta-header">
+                        <img src="img/icon-estufa.png" alt="Ícone Estufa" class="icon-3d">
+                        <h3>Sensores de Estufa</h3>
+                    </div>
+                    <input type="number" id="temperatura" placeholder="Temperatura Atual (°C)">
+                    <input type="number" id="umidade" placeholder="Umidade Relativa (%)">
+                    <button id="btn-estufa" class="btn-acao">Diagnóstico Rápido</button>
+                    <div id="resultado-estufa" class="resultado-box"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="noticias" class="secao-cinza">
+        <div class="container">
+            <h2 class="titulo-secao">Radar da Inovação</h2>
+            <div id="lista-noticias" class="grid-3-colunas">
+                </div>
+        </div>
+    </section>
+
+    <section id="jogo" class="secao-verde-escura">
+        <div class="container text-center">
+            <h2 class="titulo-secao text-white">AgroViva Harvest</h2>
+            <p class="text-white mb-20">Controle o trator, colha os alimentos e prove que você é um produtor de elite.</p>
+            <div class="game-wrapper">
+                <canvas id="gameCanvas" width="600" height="350"></canvas>
+                <div class="controles-mobile mt-20">
+                    <button id="btn-esquerda" class="btn-jogo">◀ Esq</button>
+                    <button id="btn-direita" class="btn-jogo">Dir ▶</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <img src="img/logo-agroviva.png" alt="Logo Footer" class="logo-footer">
+            <p>Projeto Agrinho 2026 - Subcategoria 3: Programação Front-End</p>
+            <p>Desenvolvido com excelência tecnológica.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/minigame.js"></script>
+</body>
+</html>
