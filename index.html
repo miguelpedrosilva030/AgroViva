@@ -40,16 +40,16 @@
             <p class="texto-apoio">As mudanças climáticas e as oscilações de mercado são os maiores adversários do produtor rural moderno.</p>
             
             <div class="grid-3-colunas mt-40">
-                <div class="card-info">
-                    <h3 class="cor-alerta">Desafio Climático</h3>
+                <div class="card-info card-alerta">
+                    <h3 class="cor-alerta">🌤️ Desafio Climático</h3>
                     <p>Secas severas e geadas inesperadas podem comprometer até 40% da safra se não houver um plano de contingência estratégico.</p>
                 </div>
-                <div class="card-info">
-                    <h3 class="cor-sucesso">A Solução AgroViva</h3>
+                <div class="card-info card-sucesso">
+                    <h3 class="cor-sucesso">🚜 A Solução AgroViva</h3>
                     <p>Nossa plataforma cruza dados de mercado e projeções climáticas para sugerir o manejo exato que blinda o seu caixa contra perdas.</p>
                 </div>
-                <div class="card-info">
-                    <h3 class="cor-destaque">Sustentabilidade Rentável</h3>
+                <div class="card-info card-destaque-azul">
+                    <h3 class="cor-destaque">🌱 Sustentabilidade Rentável</h3>
                     <p>Práticas como ILPF e Plantio Direto não apenas salvam o solo, mas geram Créditos de Carbono monetizáveis. O verde que dá lucro.</p>
                 </div>
             </div>
@@ -197,11 +197,18 @@
                     <button id="btn-play" class="btn-glowing">▶ Dar a Partida</button>
                 </div>
 
+                <div id="tela-game-over" class="overlay-jogo" style="display: none;">
+                    <h3 class="cor-alerta">💥 Fim de Jogo!</h3>
+                    <p class="text-white mb-20" style="font-size: 1.2rem;">Você bateu em um obstáculo.</p>
+                    <p class="text-white mb-20" style="font-size: 1.5rem; font-weight: bold;">Colheita final: <span id="pontuacao-final" class="cor-amarela">0</span> pts</p>
+                    <button id="btn-restart" class="btn-glowing" style="background: var(--verde-destaque); color: #fff; box-shadow: none;">🔄 Jogar Novamente</button>
+                </div>
+
                 <canvas id="gameCanvas" width="600" height="350"></canvas>
                 
                 <div class="controles-mobile mt-20">
-                    <button id="btn-esquerda" class="btn-jogo">◀ Esq</button>
-                    <button id="btn-direita" class="btn-jogo">Dir ▶</button>
+                    <button id="btn-esquerda" class="btn-jogo">◀ Esquerda</button>
+                    <button id="btn-direita" class="btn-jogo">Direita ▶</button>
                 </div>
             </div>
             
